@@ -24,10 +24,9 @@ const startServer = async () => {
     await db.sequelize.authenticate();
     console.log('Conexão com PostgreSQL estabelecida com sucesso.');
 
-    // Sincroniza os modelos com o banco de dados. 
-    // Em um ambiente de produção, considere usar migrations.
-    await db.sequelize.sync(); 
-    console.log('Modelos sincronizados com o banco de dados.');
+    // ⚠️ WARNING: force: true apaga TODAS as tabelas e recria
+    await db.sequelize.sync({ force: true }); 
+    console.log('Modelos sincronizados com o banco de dados (force: true).');
 
     // SEEDING: Garante que o usuário admin e o bilhete inicial existam
     const [user, created] = await db.User.findOrCreate({
